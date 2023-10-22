@@ -1,3 +1,5 @@
+"use client";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { NavigationItem } from "@/components/navigation/navigation-item";
 import { ModeToggle } from "../mode-toggle";
