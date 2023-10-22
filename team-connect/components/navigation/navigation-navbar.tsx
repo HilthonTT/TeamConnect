@@ -18,7 +18,7 @@ export const NavigationNavbar = () => {
         <div className="h-[72px] w-[72px] text-zinc-400 flex justify-center items-center">
           <Shield
             onClick={loadHomePage}
-            className="h-12 w-12 hover:text-indigo-400 hover:cursor-pointer"
+            className="h-12 w-12 hover:text-indigo-400 hover:cursor-pointer transition"
           />
         </div>
       </div>
