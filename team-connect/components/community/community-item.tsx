@@ -1,45 +1,120 @@
 "use client";
 
 import Image from "next/image";
-import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { ActionTooltip } from "../action-tooltip";
+
+import { Community, MemberRole, Profile } from "@prisma/client";
+import { ModalType, useModal } from "@/hooks/use-modal-store";
+
+import {
+  MoreHorizontal,
+  Pencil,
+  Trash,
+  UserMinus,
+  UserPlus,
+} from "lucide-react";
+import { ActionTooltip } from "@/components/action-tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { CommunityWithMembersWithProfiles } from "@/types";
 
 interface CommunityItemProps {
-  id: string;
-  name: string;
-  imageUrl: string;
+  community: CommunityWithMembersWithProfiles;
+  profile: Profile;
 }
 
-export const CommunityItem = ({ id, name, imageUrl }: CommunityItemProps) => {
+export const CommunityItem = ({ community, profile }: CommunityItemProps) => {
+  const { onOpen } = useModal();
   const router = useRouter();
 
   const onClick = () => {
-    router.push(`/community/${id}`);
+    router.push(`/community/${community.id}`);
   };
 
-  const onMoreOptionsClick = (event: React.MouseEvent<SVGSVGElement>) => {
+  const onModalOpen = (event: React.MouseEvent, type: ModalType, data: any) => {
     event.stopPropagation();
+
+    onOpen(type, data);
   };
+
+  const role = community.members.find(
+    (member) => member.profileId === profile.id
+  )?.role;
+
+  const isAdmin = role === MemberRole.ADMIN;
+  const isModerator = isAdmin || role === MemberRole.MODERATOR;
 
   return (
     <div onClick={onClick} className="mt-3 hover:cursor-pointer">
       <div className="dark:bg-[#404040] bg-slate-300 p-2 rounded-xl flex items-center">
         <div className="flex items-center">
-          <Image width={30} height={30} src={imageUrl} alt="Community" />
-          <ActionTooltip label={name}>
+          <Image
+            width={30}
+            height={30}
+            src={community.imageUrl}
+            alt="Community"
+          />
+          <ActionTooltip label={community.name}>
             <span className="ml-2 dark:text-white text-black overflow-hidden">
-              {name.length > 14 ? `${name.slice(0, 14)}...` : name}
+              {community.name.length > 13
+                ? `${community.name.slice(0, 13)}...`
+                : community.name}
             </span>
           </ActionTooltip>
         </div>
         <div className="flex items-center ml-auto">
           <ActionTooltip label="More options" side="right">
-            <MoreHorizontal
-              onClick={onMoreOptionsClick}
-              className="h-4 w-4 text-black dark:text-zinc-300 
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild className="focus:outline-none">
+                <MoreHorizontal
+                  onClick={(e) => e.stopPropagation()}
+                  className="h-5 w-5 text-black dark:text-zinc-300 
                   hover:text-indigo-400 dark:hover:text-indigo-500"
-            />
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 text-xs font-medium text-black dark:text-neutral-400 space-y-[2px]">
+                {isModerator && (
+                  <DropdownMenuItem
+                    className="cursor-pointer px-3 py-2 group"
+                    onClick={(e) => onModalOpen(e, "invite", { community })}>
+                    Invite People
+                    <UserPlus
+                      className="h-4 w-4 ml-auto group-hover:text-indigo-400 
+                    dark:group-hover:text-indigo-500"
+                    />
+                  </DropdownMenuItem>
+                )}
+                {isAdmin && (
+                  <DropdownMenuItem className="cursor-pointer px-3 py-2 group">
+                    Edit Community
+                    <Pencil
+                      className="h-4 w-4 ml-auto group-hover:text-indigo-400 
+                    dark:group-hover:text-indigo-500"
+                    />
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuItem className="cursor-pointer px-3 py-2 group">
+                  Leave Community
+                  <UserMinus
+                    className="h-4 w-4 ml-auto group-hover:text-indigo-400 
+                  dark:group-hover:text-indigo-500"
+                  />
+                </DropdownMenuItem>
+                {isAdmin && (
+                  <DropdownMenuItem className="cursor-pointer px-3 py-2 group">
+                    Delete Community
+                    <Trash
+                      className="h-4 w-4 ml-auto group-hover:text-indigo-400 
+                    dark:group-hover:text-indigo-500"
+                    />
+                  </DropdownMenuItem>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </ActionTooltip>
         </div>
       </div>

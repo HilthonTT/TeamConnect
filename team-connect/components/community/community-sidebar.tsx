@@ -48,9 +48,8 @@ export const CommunitySidebar = async () => {
         {communities?.map((community) => (
           <CommunityItem
             key={community.id}
-            id={community.id}
-            name={community.name}
-            imageUrl={community.imageUrl}
+            community={community}
+            profile={profile}
           />
         ))}
       </ScrollArea>
