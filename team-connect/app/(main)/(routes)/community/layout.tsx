@@ -10,7 +10,7 @@ const CommunityLayout = async ({ children }: { children: React.ReactNode }) => {
     return redirectToSignIn();
   }
 
-  const community = await db.community.findFirst({
+  const communities = await db.community.findFirst({
     where: {
       members: {
         some: {
@@ -23,7 +23,7 @@ const CommunityLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-full">
       <div className="hidden md:flex h-full w-60 z-20 flex-col inset-y-0">
-        <CommunitySidebar communityId={community?.id as string} />
+        <CommunitySidebar />
       </div>
       <main className="h-full md:pl-60">{children}</main>
     </div>

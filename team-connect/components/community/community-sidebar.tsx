@@ -1,34 +1,23 @@
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { ChannelType } from "@prisma/client";
 
 import { redirect } from "next/navigation";
-import { CommunityNoneHeader } from "./community-none-header";
+import { CommunityHeader } from "@/components/community/community-header";
 
-interface CommunitySidebarProps {
-  communityId: string;
-}
-
-export const CommunitySidebar = async ({
-  communityId,
-}: CommunitySidebarProps) => {
+export const CommunitySidebar = async () => {
   const profile = await currentProfile();
 
   if (!profile) {
     return redirect("/");
   }
 
-  if (!communityId) {
-    return (
-      <div className="flex flex-col h-full w-full text-zinc-400 dark:bg-[#1f1e1e] bg-white">
-        <CommunityNoneHeader />
-      </div>
-    );
-  }
-
-  const community = await db.community.findUnique({
+  const communities = await db.community.findMany({
     where: {
-      id: communityId,
+      members: {
+        some: {
+          profileId: profile.id,
+        },
+      },
     },
     include: {
       channels: {
@@ -47,31 +36,9 @@ export const CommunitySidebar = async ({
     },
   });
 
-  if (!community) {
-    return redirect("/");
-  }
-
-  const textChannels = community?.channels.filter(
-    (channel) => channel.type === ChannelType.TEXT
-  );
-
-  const audioChannels = community?.channels.filter(
-    (channel) => channel.type === ChannelType.AUDIO
-  );
-
-  const videoChannels = community?.channels.filter(
-    (channel) => channel.type === ChannelType.VIDEO
-  );
-
-  const members = community?.members.filter(
-    (member) => member.profileId !== profile.id
-  );
-
-  const role = community.members.find(
-    (member) => member.profileId === profile.id
-  )?.role;
-
   return (
-    <div className="flex flex-col h-full w-full text-zinc-400 dark:bg-[#4d4b4b] bg-white"></div>
+    <div className="flex flex-col h-full w-full text-zinc-400 dark:bg-[#1f1e1e] bg-white">
+      <CommunityHeader />
+    </div>
   );
 };
