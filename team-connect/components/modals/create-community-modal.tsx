@@ -27,7 +27,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-import { File } from "lucide-react";
+import { FileUpload } from "@/components/file-upload";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -95,7 +95,11 @@ export const CreateCommunityModal = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <File className="h-10 w-10" />
+                        <FileUpload
+                          endpoint="communityImage"
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
                       </FormControl>
                     </FormItem>
                   )}

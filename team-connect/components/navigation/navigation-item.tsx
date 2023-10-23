@@ -11,9 +11,9 @@ interface NavigationItemProps {
 }
 
 const iconMap: Record<string, any> = {
-  ACTIVITY: <Bell />,
-  COMMUNITY: <Users />,
-  CHAT: <MessageCircle />,
+  ACTIVITY: <Bell className="text-zinc-600 dark:text-zinc-200" />,
+  COMMUNITY: <Users className="text-zinc-600 dark:text-zinc-200" />,
+  CHAT: <MessageCircle className="text-zinc-600 dark:text-zinc-200" />,
 };
 
 export const NavigationItem = ({ name }: NavigationItemProps) => {
@@ -42,9 +42,9 @@ export const NavigationItem = ({ name }: NavigationItemProps) => {
           )}></div>
         <div
           className="w-[72px] h-[72px] flex flex-col justify-center items-center bg-transparent 
-              hover:bg-[#111111] hover:text-indigo-500 transition">
+              dark:hover:bg-[#111111] hover:bg-[#c0c0c0] hover:text-indigo-500 transition">
           {icon}
-          <p className="text-[10px]">{name}</p>
+          <p className="text-[10px] text-zinc-600 dark:text-zinc-200">{name}</p>
         </div>
       </button>
     </ActionTooltip>
