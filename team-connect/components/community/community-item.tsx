@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
-import { Community, MemberRole, Profile } from "@prisma/client";
+import { MemberRole, Profile } from "@prisma/client";
 import { ModalType, useModal } from "@/hooks/use-modal-store";
+import { CommunityWithMembersWithProfiles } from "@/types";
 
 import {
   MoreHorizontal,
@@ -20,7 +20,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CommunityWithMembersWithProfiles } from "@/types";
+import { UserAvatar } from "@/components/user-avatar";
+import { cn } from "@/lib/utils";
 
 interface CommunityItemProps {
   community: CommunityWithMembersWithProfiles;
@@ -30,6 +31,7 @@ interface CommunityItemProps {
 export const CommunityItem = ({ community, profile }: CommunityItemProps) => {
   const { onOpen } = useModal();
   const router = useRouter();
+  const params = useParams();
 
   const onClick = () => {
     router.push(`/community/${community.id}`);
@@ -50,14 +52,14 @@ export const CommunityItem = ({ community, profile }: CommunityItemProps) => {
 
   return (
     <div onClick={onClick} className="mt-3 hover:cursor-pointer">
-      <div className="dark:bg-[#404040] bg-slate-300 p-2 rounded-xl flex items-center">
+      <div
+        className={cn(
+          " hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 p-2 rounded-xl flex items-center group",
+          params?.communityId === community.id &&
+            "dark:bg-[#404040] bg-zinc-700/20"
+        )}>
         <div className="flex items-center">
-          <Image
-            width={30}
-            height={30}
-            src={community.imageUrl}
-            alt="Community"
-          />
+          <UserAvatar src={community.imageUrl} />
           <ActionTooltip label={community.name}>
             <span className="ml-2 dark:text-white text-black overflow-hidden">
               {community.name.length > 13

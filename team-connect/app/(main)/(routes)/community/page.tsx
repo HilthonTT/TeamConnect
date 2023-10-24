@@ -1,4 +1,4 @@
-const Community = async () => {
+const Community = () => {
   return <div></div>;
 };
 

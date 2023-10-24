@@ -1,11 +1,13 @@
 "use client";
 
-import { Channel, ChannelType, Community, MemberRole } from "@prisma/client";
-import { ActionTooltip } from "../action-tooltip";
-import { Edit, Hash, Lock, Mic, Trash, Video } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Channel, ChannelType, Community, MemberRole } from "@prisma/client";
+
 import { ModalType, useModal } from "@/hooks/use-modal-store";
 import { useParams, useRouter } from "next/navigation";
+
+import { ActionTooltip } from "@/components/action-tooltip";
+import { Edit, Hash, Lock, Mic, Trash, Video } from "lucide-react";
 
 interface CommunityChannelProps {
   channel: Channel;

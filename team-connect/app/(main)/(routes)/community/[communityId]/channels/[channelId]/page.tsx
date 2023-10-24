@@ -1,10 +1,8 @@
+import { ChannelHeader } from "@/components/channel/channel-header";
 import { ChannelSidebar } from "@/components/channel/channel-sidebar";
 
 import { currentProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
-import { ChannelType } from "@prisma/client";
-import { redirect } from "next/navigation";
 
 interface ChannelIdProps {
   params: {
@@ -22,7 +20,7 @@ const ChannelIdPage = async ({ params }: ChannelIdProps) => {
 
   return (
     <div className="flex h-full">
-      <div>Channel Id Page</div>
+      <ChannelHeader params={params} />
       <div className="hidden md:flex h-full w-60 z-20 flex-col ml-auto">
         <ChannelSidebar params={params} />
       </div>

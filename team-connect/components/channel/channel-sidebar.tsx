@@ -1,12 +1,14 @@
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { redirectToSignIn } from "@clerk/nextjs";
 import { ChannelType } from "@prisma/client";
+
+import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ChannelSection } from "./channel-section";
-import { CommunityMember } from "../community/community-member";
-import { CommunityChannel } from "../community/community-channel";
+import { ChannelSection } from "@/components/channel/channel-section";
+import { CommunityMember } from "@/components/community/community-member";
+import { CommunityChannel } from "@/components/community/community-channel";
 
 interface ChannelSidebarProps {
   params: {

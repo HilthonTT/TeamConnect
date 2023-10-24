@@ -2,9 +2,10 @@
 
 import { CommunityWithMembersWithProfiles } from "@/types";
 import { ChannelType, MemberRole } from "@prisma/client";
-import { ActionTooltip } from "../action-tooltip";
-import { Plus, Settings } from "lucide-react";
 import { useModal } from "@/hooks/use-modal-store";
+
+import { ActionTooltip } from "@/components/action-tooltip";
+import { Plus, Settings } from "lucide-react";
 
 interface ChannelSectionProps {
   label: string;

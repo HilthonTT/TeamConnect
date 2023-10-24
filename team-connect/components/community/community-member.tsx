@@ -1,10 +1,12 @@
 "use client";
 
 import { Member, Profile, Community, MemberRole } from "@prisma/client";
-import { ShieldAlert, ShieldCheck } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
-import { UserAvatar } from "../user-avatar";
 import { cn } from "@/lib/utils";
+
+import { useParams, useRouter } from "next/navigation";
+
+import { UserAvatar } from "@/components/user-avatar";
+import { ShieldAlert, ShieldCheck } from "lucide-react";
 
 interface CommunityMemberProps {
   member: Member & { profile: Profile };
