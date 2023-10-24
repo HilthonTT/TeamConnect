@@ -11,7 +11,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="hidden md:flex h-full w-[72px] flex-col inset-y-0">
           <NavigationSideBar />
         </div>
-        <main className="h-full">{children}</main>
+        <main className="h-full w-full">{children}</main>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-const Community = () => {
-  return <div>Community Page</div>;
+const Community = async () => {
+  return <div></div>;
 };
 
 export default Community;
