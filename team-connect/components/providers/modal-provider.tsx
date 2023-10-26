@@ -7,6 +7,7 @@ import { EditCommunityModal } from "@/components/modals/edit-community-modal";
 import { DeleteCommunityModal } from "@/components/modals/delete-community-modal";
 import { LeaveCommunityModal } from "@/components/modals/leave-community-modal";
 import { JoinCommunityModal } from "@/components/modals/join-community-modal";
+import { CreateChannelModal } from "@/components/modals/create-channel-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -27,6 +28,7 @@ export const ModalProvider = () => {
       <DeleteCommunityModal />
       <LeaveCommunityModal />
       <JoinCommunityModal />
+      <CreateChannelModal />
     </>
   );
 };
