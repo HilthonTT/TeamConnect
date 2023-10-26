@@ -13,6 +13,10 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    if (!params.communityId) {
+      return new NextResponse("Community ID missing", { status: 400 });
+    }
+
     const { name, imageUrl } = await req.json();
 
     const community = await db.community.update({
@@ -42,6 +46,10 @@ export async function DELETE(
 
     if (!profile) {
       return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    if (!params.communityId) {
+      return new NextResponse("Community ID missing", { status: 400 });
     }
 
     const community = await db.community.delete({

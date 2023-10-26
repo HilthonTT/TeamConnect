@@ -1,14 +1,6 @@
 import { CommunitySidebar } from "@/components/community/community-sidebar";
-import { currentProfile } from "@/lib/current-profile";
-import { redirectToSignIn } from "@clerk/nextjs";
 
-const CommunityLayout = async ({ children }: { children: React.ReactNode }) => {
-  const profile = await currentProfile();
-
-  if (!profile) {
-    return redirectToSignIn();
-  }
-
+const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-full flex">
       <div className="hidden md:flex h-full w-60 z-20 flex-col">

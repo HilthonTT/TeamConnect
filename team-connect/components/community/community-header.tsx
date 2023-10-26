@@ -29,6 +29,7 @@ export const CommunityHeader = () => {
           <button className="mx-2">
             <ActionTooltip label="Join a community" side="bottom">
               <Mail
+                onClick={() => onOpen("joinCommunity")}
                 className="h-6 w-6 text-black dark:text-white 
               hover:text-indigo-400 dark:hover:text-indigo-500 transition"
               />

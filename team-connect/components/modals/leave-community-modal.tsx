@@ -18,11 +18,11 @@ import { Button } from "@/components/ui/button";
 
 import { ActionTooltip } from "@/components/action-tooltip";
 
-export const DeleteCommunityModal = () => {
+export const LeaveCommunityModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
 
-  const isModalOpen = isOpen && type === "deleteCommunity";
+  const isModalOpen = isOpen && type === "leaveCommunity";
   const { community } = data;
 
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +31,7 @@ export const DeleteCommunityModal = () => {
     try {
       setIsLoading(true);
 
-      await axios.delete(`/api/community/${community?.id}`);
+      await axios.patch(`/api/community/${community?.id}/leave`);
 
       onClose();
       router.refresh();
@@ -48,10 +48,10 @@ export const DeleteCommunityModal = () => {
       <DialogContent className="bg-white dark:bg-[#2b2b2b] text-black dark:text-white p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-[23px] text-center font-bold">
-            Delete your community
+            Leave community
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500 dark:text-zinc-200">
-            Are you sure you want to do this? <br />
+            Are you sure you want to leave <br />
             {community?.name?.length && (
               <ActionTooltip label={community?.name}>
                 <span className="font-semibold text-rose-500">
@@ -61,7 +61,7 @@ export const DeleteCommunityModal = () => {
                 </span>
               </ActionTooltip>
             )}{" "}
-            will be permanently deleted.
+            ?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="bg-gray-100 dark:bg-[#333333] px-6 py-4">

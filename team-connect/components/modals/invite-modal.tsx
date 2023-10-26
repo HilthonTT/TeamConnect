@@ -21,7 +21,6 @@ import { CheckIcon, Copy, RefreshCcw } from "lucide-react";
 
 export const InviteModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
-  const origin = useOrigin();
 
   const isModalOpen = isOpen && type === "invite";
   const { community } = data;
@@ -29,7 +28,7 @@ export const InviteModal = () => {
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const inviteUrl = `${origin}/invite/${community?.inviteCode}`;
+  const inviteUrl = `${community?.inviteCode}`;
 
   const onCopy = () => {
     navigator.clipboard.writeText(inviteUrl);
@@ -75,8 +74,8 @@ export const InviteModal = () => {
           </DialogTitle>
         </DialogHeader>
         <div className="p-6">
-          <Label className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-            Server invite link
+          <Label className="uppercase text-xs font-bold text-zinc-500 dark:text-zinc-200">
+            Community invite link
           </Label>
           <div className="flex items-center mt-2 gap-x-2">
             <Input
