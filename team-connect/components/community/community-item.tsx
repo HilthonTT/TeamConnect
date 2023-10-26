@@ -113,7 +113,11 @@ export const CommunityItem = ({ community, profile }: CommunityItemProps) => {
                   </DropdownMenuItem>
                 )}
                 {isAdmin && (
-                  <DropdownMenuItem className="cursor-pointer px-3 py-2 group">
+                  <DropdownMenuItem
+                    onClick={(e) =>
+                      onModalOpen(e, "deleteCommunity", { community })
+                    }
+                    className="cursor-pointer px-3 py-2 group">
                     Delete Community
                     <Trash
                       className="h-4 w-4 ml-auto group-hover:text-indigo-400 

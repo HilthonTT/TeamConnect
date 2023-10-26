@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { CreateCommunityModal } from "@/components/modals/create-community-modal";
 import { InviteModal } from "@/components/modals/invite-modal";
 import { EditCommunityModal } from "../modals/edit-community-modal";
+import { DeleteCommunityModal } from "../modals/delete-community-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -21,6 +22,7 @@ export const ModalProvider = () => {
       <CreateCommunityModal />
       <InviteModal />
       <EditCommunityModal />
+      <DeleteCommunityModal />
     </>
   );
 };

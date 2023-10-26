@@ -1,7 +1,11 @@
 import { Community } from "@prisma/client";
 import { create } from "zustand";
 
-export type ModalType = "createCommunity" | "invite" | "editCommunity";
+export type ModalType =
+  | "createCommunity"
+  | "invite"
+  | "editCommunity"
+  | "deleteCommunity";
 
 interface ModalData {
   community?: Community;
