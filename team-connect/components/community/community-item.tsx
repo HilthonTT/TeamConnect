@@ -91,7 +91,11 @@ export const CommunityItem = ({ community, profile }: CommunityItemProps) => {
                   </DropdownMenuItem>
                 )}
                 {isAdmin && (
-                  <DropdownMenuItem className="cursor-pointer px-3 py-2 group">
+                  <DropdownMenuItem
+                    onClick={(e) =>
+                      onModalOpen(e, "editCommunity", { community })
+                    }
+                    className="cursor-pointer px-3 py-2 group">
                     Edit Community
                     <Pencil
                       className="h-4 w-4 ml-auto group-hover:text-indigo-400 
@@ -99,13 +103,15 @@ export const CommunityItem = ({ community, profile }: CommunityItemProps) => {
                     />
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuItem className="cursor-pointer px-3 py-2 group">
-                  Leave Community
-                  <UserMinus
-                    className="h-4 w-4 ml-auto group-hover:text-indigo-400 
+                {!isAdmin && (
+                  <DropdownMenuItem className="cursor-pointer px-3 py-2 group">
+                    Leave Community
+                    <UserMinus
+                      className="h-4 w-4 ml-auto group-hover:text-indigo-400 
                   dark:group-hover:text-indigo-500"
-                  />
-                </DropdownMenuItem>
+                    />
+                  </DropdownMenuItem>
+                )}
                 {isAdmin && (
                   <DropdownMenuItem className="cursor-pointer px-3 py-2 group">
                     Delete Community
