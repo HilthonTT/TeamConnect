@@ -1,4 +1,4 @@
-import { ChannelType, Community } from "@prisma/client";
+import { Channel, ChannelType, Community } from "@prisma/client";
 
 import { create } from "zustand";
 
@@ -10,11 +10,14 @@ export type ModalType =
   | "leaveCommunity"
   | "joinCommunity"
   | "createChannel"
-  | "members";
+  | "members"
+  | "editChannel"
+  | "deleteChannel";
 
 interface ModalData {
   community?: Community;
   channelType?: ChannelType;
+  channel?: Channel;
 }
 
 interface ModalStore {
