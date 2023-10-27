@@ -4,6 +4,10 @@ export const getOrCreateConversation = async (
   profileOneId: string,
   profileTwoId: string
 ) => {
+  if (profileOneId === profileTwoId) {
+    return null;
+  }
+
   let conversation =
     (await findConversation(profileOneId, profileTwoId)) ||
     (await findConversation(profileTwoId, profileOneId));
@@ -46,7 +50,7 @@ const createNewConversation = async (
         profileTwo: {},
       },
     });
-  } catch {
+  } catch (error) {
     return null;
   }
 };

@@ -2,6 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 
+import { cn } from "@/lib/utils";
 import { MemberRole, Profile } from "@prisma/client";
 import { ModalType, useModal } from "@/hooks/use-modal-store";
 import { CommunityWithMembersWithProfiles } from "@/types";
@@ -21,7 +22,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "@/components/user-avatar";
-import { cn } from "@/lib/utils";
 
 interface CommunityItemProps {
   community: CommunityWithMembersWithProfiles;
@@ -54,7 +54,7 @@ export const CommunityItem = ({ community, profile }: CommunityItemProps) => {
     <div onClick={onClick} className="mt-3 hover:cursor-pointer">
       <div
         className={cn(
-          " hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 p-2 rounded-xl flex items-center group",
+          "hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 p-2 rounded-xl flex items-center group",
           params?.communityId === community.id &&
             "dark:bg-[#404040] bg-zinc-700/20"
         )}>

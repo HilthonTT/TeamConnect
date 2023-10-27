@@ -1,5 +1,7 @@
 "use client";
 
+import { Separator } from "@/components/ui/separator";
+
 export const ChatHeader = () => {
   return (
     <div className="border-0">
@@ -8,6 +10,7 @@ export const ChatHeader = () => {
           Chats
         </span>
       </div>
+      <Separator className="bg-zinc-800 dark:bg-zinc-600 mt-2" />
     </div>
   );
 };
