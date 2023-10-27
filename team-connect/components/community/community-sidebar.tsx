@@ -1,7 +1,7 @@
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
-import { redirect } from "next/navigation";
+import { redirectToSignIn } from "@clerk/nextjs";
 
 import { CommunityItem } from "@/components/community/community-item";
 import { CommunityHeader } from "@/components/community/community-header";
@@ -11,7 +11,7 @@ export const CommunitySidebar = async () => {
   const profile = await currentProfile();
 
   if (!profile) {
-    return redirect("/");
+    return redirectToSignIn();
   }
 
   const communities = await db.community.findMany({
