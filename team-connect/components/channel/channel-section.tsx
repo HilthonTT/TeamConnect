@@ -41,7 +41,7 @@ export const ChannelSection = ({
       {role === MemberRole.ADMIN && sectionType === "members" && (
         <ActionTooltip label="Manage Members" side="top">
           <button
-            onClick={() => onOpen("invite", { community })}
+            onClick={() => onOpen("members", { community })}
             className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition">
             <Settings className="h-4 w-4" />
           </button>

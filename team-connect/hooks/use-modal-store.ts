@@ -9,7 +9,8 @@ export type ModalType =
   | "deleteCommunity"
   | "leaveCommunity"
   | "joinCommunity"
-  | "createChannel";
+  | "createChannel"
+  | "members";
 
 interface ModalData {
   community?: Community;
