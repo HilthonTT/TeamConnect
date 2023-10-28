@@ -40,6 +40,16 @@ export const NavigationNavbar = async () => {
     },
   });
 
+  const conversations = await db.conversation.findMany({
+    where: {
+      OR: [{ profileOneId: profile?.id }, { profileTwoId: profile.id }],
+    },
+    include: {
+      profileOne: {},
+      profileTwo: {},
+    },
+  });
+
   return (
     <div className="flex h-full text-zinc-400 w-full dark:bg-[#0d0d0d] bg-[#E3E5E8] py-3">
       <div className="flex items-center justify-start">
@@ -51,7 +61,11 @@ export const NavigationNavbar = async () => {
             text-zinc-600 dark:text-zinc-200"
             />
           </a>
-          <MobileSidebarToggle communities={communities} profile={profile} />
+          <MobileSidebarToggle
+            communities={communities}
+            conversations={conversations}
+            profile={profile}
+          />
         </div>
       </div>
       <div className="ml-auto mr-auto">
