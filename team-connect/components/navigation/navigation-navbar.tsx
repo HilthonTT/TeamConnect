@@ -8,6 +8,7 @@ import { currentProfile } from "@/lib/current-profile";
 
 import { redirectToSignIn } from "@clerk/nextjs";
 import { MobileSidebarRightToggle } from "@/components/mobile-sidebar-right-toggle";
+import { ConversationWithProfiles } from "@/types";
 
 export const NavigationNavbar = async () => {
   const profile = await currentProfile();
@@ -51,6 +52,24 @@ export const NavigationNavbar = async () => {
     },
   });
 
+  const getOtherProfile = (conversation: ConversationWithProfiles) => {
+    const otherProfile =
+      conversation.profileOne.id === profile?.id
+        ? conversation.profileTwo
+        : conversation.profileOne;
+
+    return otherProfile;
+  };
+
+  const conversationData = conversations?.map((conversation) => {
+    const otherProfile = getOtherProfile(conversation);
+    return {
+      id: otherProfile.id,
+      name: otherProfile.username,
+      icon: otherProfile.imageUrl,
+    };
+  });
+
   return (
     <div className="flex h-full text-zinc-400 w-full dark:bg-[#0d0d0d] bg-[#E3E5E8] py-3">
       <div className="flex items-center justify-start">
@@ -70,7 +89,24 @@ export const NavigationNavbar = async () => {
         </div>
       </div>
       <div className="ml-auto mr-auto">
-        <NavigationSearch data={[]} />
+        <NavigationSearch
+          data={[
+            {
+              label: "Communities",
+              type: "community",
+              data: communities?.map((community) => ({
+                id: community.id,
+                name: community.name,
+                icon: community.imageUrl,
+              })),
+            },
+            {
+              label: "Conversations",
+              type: "conversation",
+              data: conversationData || [],
+            },
+          ]}
+        />
       </div>
       <div className="flex items-center justify-end">
         <MobileSidebarRightToggle

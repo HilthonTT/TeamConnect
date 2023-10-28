@@ -2,6 +2,7 @@
 
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
+
 import {
   Command,
   CommandEmpty,
@@ -9,17 +10,22 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { UserAvatar } from "@/components/user-avatar";
 
 interface NavigationSearchProps {
   data: {
     label: string;
-    type: "profile" | "community";
+    type: "community" | "conversation";
     data:
       | {
-          icon: React.ReactNode;
+          icon: string;
           name: string;
           id: string;
         }[]
@@ -29,16 +35,16 @@ interface NavigationSearchProps {
 
 export const NavigationSearch = ({ data }: NavigationSearchProps) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
   const router = useRouter();
-  const params = useParams();
+
+  const placeholder = "Search for communities, conversations by their names...";
 
   const onClick = ({
     id,
     type,
   }: {
     id: string;
-    type: "profile" | "community";
+    type: "conversation" | "community";
   }) => {
     setOpen(false);
 
@@ -46,7 +52,7 @@ export const NavigationSearch = ({ data }: NavigationSearchProps) => {
       return router.push(`/community/${id}`);
     }
 
-    if (type === "profile") {
+    if (type === "conversation") {
       return router.push(`/chat/${id}`);
     }
   };
@@ -71,7 +77,7 @@ export const NavigationSearch = ({ data }: NavigationSearchProps) => {
           role="combobox"
           aria-expanded={open}
           className="bg-[#cac4c4] text-zinc-900 dark:bg-[#333333] dark:text-zinc-300 md:w-[500px] w-[350px]">
-          Search for people by name or email...
+          {placeholder}
           <kbd
             className="pointer-events-none inline-flex h-5 select-none items-center 
             gap-1 rounded border bg-muted px-1.5 font-mono text-[10px]
@@ -83,7 +89,7 @@ export const NavigationSearch = ({ data }: NavigationSearchProps) => {
       </PopoverTrigger>
       <PopoverContent className="p-0 md:w-[500px] w-[350px]">
         <Command>
-          <CommandInput placeholder="Search for people by name or email..." />
+          <CommandInput placeholder={placeholder} />
           <CommandEmpty>No Results Found</CommandEmpty>
           {data.map(({ label, type, data }) => {
             if (!data?.length) {
@@ -95,8 +101,10 @@ export const NavigationSearch = ({ data }: NavigationSearchProps) => {
                   return (
                     <CommandItem
                       key={id}
-                      onSelect={() => onClick({ id, type })}>
-                      {icon} <span>{name}</span>
+                      onSelect={() => onClick({ id, type })}
+                      className="hover:cursor-pointer">
+                      <UserAvatar src={icon} />{" "}
+                      <span className="ml-1">{name}</span>
                     </CommandItem>
                   );
                 })}
