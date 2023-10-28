@@ -44,7 +44,7 @@ export const CommunityItem = ({ community, profile }: CommunityItemProps) => {
   };
 
   const role = community.members.find(
-    (member) => member.profileId === profile.id
+    (member) => member.profileId === profile?.id
   )?.role;
 
   const isAdmin = role === MemberRole.ADMIN;
