@@ -7,6 +7,7 @@ import { db } from "@/lib/db";
 import { currentProfile } from "@/lib/current-profile";
 
 import { redirectToSignIn } from "@clerk/nextjs";
+import { MobileSidebarRightToggle } from "@/components/mobile-sidebar-right-toggle";
 
 export const NavigationNavbar = async () => {
   const profile = await currentProfile();
@@ -70,6 +71,13 @@ export const NavigationNavbar = async () => {
       </div>
       <div className="ml-auto mr-auto">
         <NavigationSearch data={[]} />
+      </div>
+      <div className="flex items-center justify-end">
+        <MobileSidebarRightToggle
+          communities={communities}
+          conversations={conversations}
+          profile={profile}
+        />
       </div>
     </div>
   );

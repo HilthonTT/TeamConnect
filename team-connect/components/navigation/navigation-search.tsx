@@ -70,7 +70,7 @@ export const NavigationSearch = ({ data }: NavigationSearchProps) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="bg-[#cac4c4] text-zinc-900 dark:bg-[#333333] dark:text-zinc-300 w-[500px]">
+          className="bg-[#cac4c4] text-zinc-900 dark:bg-[#333333] dark:text-zinc-300 md:w-[500px] w-[350px]">
           Search for people by name or email...
           <kbd
             className="pointer-events-none inline-flex h-5 select-none items-center 
@@ -81,7 +81,7 @@ export const NavigationSearch = ({ data }: NavigationSearchProps) => {
           <Search className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-[500px]">
+      <PopoverContent className="p-0 md:w-[500px] w-[350px]">
         <Command>
           <CommandInput placeholder="Search for people by name or email..." />
           <CommandEmpty>No Results Found</CommandEmpty>

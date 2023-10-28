@@ -29,7 +29,7 @@ export const MobileSidebarToggle = ({
   const pathName = usePathname();
 
   const isCommunity = pathName.toLowerCase().includes("/community");
-  const isChat = pathName.toLowerCase().includes("/chat");
+  const isChat = pathName.toLowerCase().includes("/chat") && !isCommunity;
 
   return (
     <Sheet>
