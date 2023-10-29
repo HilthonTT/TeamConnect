@@ -1,3 +1,4 @@
+import { CommunityMain } from "@/components/community/community-main";
 import { currentProfile } from "@/lib/current-profile";
 import { redirectToSignIn } from "@clerk/nextjs";
 
@@ -8,7 +9,7 @@ const Community = async () => {
     return redirectToSignIn();
   }
 
-  return <div></div>;
+  return <CommunityMain />;
 };
 
 export default Community;
