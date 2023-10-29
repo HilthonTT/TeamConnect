@@ -3,15 +3,15 @@
 import { useModal } from "@/hooks/use-modal-store";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Plus, Camera } from "lucide-react";
+import { Plus, MailPlus } from "lucide-react";
 
 interface CommunityButtonProps {
-  type: "create" | "invite";
+  type: "create" | "join";
 }
 
 const iconMap = {
   create: <Plus />,
-  invite: <Camera />,
+  join: <MailPlus />,
 };
 
 export const CommunityButton = ({ type }: CommunityButtonProps) => {
@@ -25,12 +25,12 @@ export const CommunityButton = ({ type }: CommunityButtonProps) => {
       onOpen("createCommunity");
     }
 
-    if (type === "invite") {
-      onOpen("invite");
+    if (type === "join") {
+      onOpen("joinCommunity");
     }
   };
 
-  const text = type === "create" ? "Create now" : "Invite now";
+  const text = type === "create" ? "Create now" : "Join now";
   const icon = iconMap[type];
 
   return (

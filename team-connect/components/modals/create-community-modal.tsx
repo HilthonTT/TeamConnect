@@ -56,10 +56,11 @@ export const CreateCommunityModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/community", values);
+      const response = await axios.post("/api/community", values);
 
       form.reset();
       router.refresh();
+      router.push(`/community/${response.data.id}`);
       onClose();
     } catch (error) {
       console.log(error);

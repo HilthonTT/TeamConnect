@@ -25,10 +25,10 @@ export const CommunityMain = () => {
             <div className="flex items-center justify-center flex-col">
               <PartyPopper className="h-20 w-20 hover:text-indigo-500 transition" />
               <p className="mt-8 dark:text-zinc-200 text-zinc-500 font-bold">
-                Invite people!
+                Join communities
               </p>
             </div>
-            <CommunityButton type="invite" />
+            <CommunityButton type="join" />
           </div>
         </div>
       </div>
