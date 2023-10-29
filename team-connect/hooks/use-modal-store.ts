@@ -12,12 +12,15 @@ export type ModalType =
   | "createChannel"
   | "members"
   | "editChannel"
-  | "deleteChannel";
+  | "deleteChannel"
+  | "messageFile";
 
 interface ModalData {
   community?: Community;
   channelType?: ChannelType;
   channel?: Channel;
+  apiUrl?: string;
+  query?: Record<string, any>;
 }
 
 interface ModalStore {
