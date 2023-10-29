@@ -1,6 +1,8 @@
 import { initialProfile } from "@/lib/initial-profile";
 import { redirectToSignIn } from "@clerk/nextjs";
 
+import { redirect } from "next/navigation";
+
 const MainPage = async () => {
   const profile = await initialProfile(true);
 
@@ -8,7 +10,7 @@ const MainPage = async () => {
     return redirectToSignIn();
   }
 
-  return <div></div>;
+  return redirect("/community");
 };
 
 export default MainPage;
