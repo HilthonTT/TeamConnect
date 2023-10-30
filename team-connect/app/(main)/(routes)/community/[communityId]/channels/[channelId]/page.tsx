@@ -1,5 +1,6 @@
 import { ChannelHeader } from "@/components/channel/channel-header";
 import { ChannelSidebar } from "@/components/channel/channel-sidebar";
+import { MessageBox } from "@/components/message/message-box";
 import { MessageInput } from "@/components/message/message-input";
 
 import { currentProfile } from "@/lib/current-profile";
@@ -7,6 +8,7 @@ import { db } from "@/lib/db";
 
 import { redirectToSignIn } from "@clerk/nextjs";
 import { ChannelType } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 interface ChannelIdProps {
   params: {
@@ -35,22 +37,41 @@ const ChannelIdPage = async ({ params }: ChannelIdProps) => {
     },
   });
 
+  if (!channel || !member) {
+    return redirect("/community");
+  }
+
   return (
     <div className="flex flex-col h-full">
       <ChannelHeader params={params} />
       <div className="flex flex-grow">
         <div className="flex flex-col flex-grow">
-          <div className="flex-1">A message!</div>
           {channel?.type === ChannelType.TEXT && (
-            <MessageInput
-              name={channel.name}
-              type="channel"
-              apiUrl="/api/socket/posts"
-              query={{
-                channelId: channel.id,
-                communityId: channel.communityId,
-              }}
-            />
+            <>
+              <MessageBox
+                member={member}
+                name={channel.name}
+                chatId={channel.id}
+                type="channel"
+                apiUrl="/api/posts"
+                socketUrl="/api/socket/posts"
+                socketQuery={{
+                  channelId: channel.id,
+                  communityId: channel.communityId,
+                }}
+                paramKey="channelId"
+                paramValue={channel.id}
+              />
+              <MessageInput
+                name={channel.name}
+                type="channel"
+                apiUrl="/api/socket/posts"
+                query={{
+                  channelId: channel.id,
+                  communityId: channel.communityId,
+                }}
+              />
+            </>
           )}
         </div>
         <div className="hidden md:flex w-60 z-20">

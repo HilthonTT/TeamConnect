@@ -3,6 +3,7 @@ import { ChannelType } from "@prisma/client";
 
 import { redirect } from "next/navigation";
 
+import { SocketIndicator } from "@/components/socket-indicator";
 import { UserAvatar } from "@/components/user-avatar";
 import { Hash, Mic, Video } from "lucide-react";
 
@@ -59,9 +60,14 @@ export const ChannelHeader = async ({ params }: ChannelHeaderProps) => {
         <span className="text-black dark:text-white font-semibold ml-2 text-[20px]">
           {community.name}
         </span>
+        <div className="flex items-center justify-center flex-grow"></div>
         <span className="text-black dark:text-white font-semibold text-[20px] ml-auto mr-2 flex items-center">
-          <Icon />
-          {channel?.name}
+          <SocketIndicator />
+
+          <div className="ml-3 flex items-center">
+            <Icon />
+            {channel?.name}
+          </div>
         </span>
       </div>
     </div>

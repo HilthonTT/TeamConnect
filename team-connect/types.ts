@@ -7,6 +7,7 @@ import {
   Community,
   Conversation,
   Member,
+  Post,
   Profile,
 } from "@prisma/client";
 
@@ -29,5 +30,11 @@ export type NextApiResponseServerIo = NextApiResponse & {
     server: NetServer & {
       io: SocketIOServer;
     };
+  };
+};
+
+export type PostWithMemberWithProfile = Post & {
+  member: Member & {
+    profile: Profile;
   };
 };
