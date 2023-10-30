@@ -85,13 +85,13 @@ export default async function handler(
       },
     });
 
-    const channelKey = `chat:${channelId}:messages`;
+    const channelKey = `chat:${channelId}:posts`;
 
     res?.socket?.server?.io?.emit(channelKey, post);
 
     return res.status(200).json(post);
   } catch (error) {
-    console.log("[PAGES_MESSAGES_POST]", error);
+    console.log("[PAGES_POST]", error);
     return res.status(500).json({
       message: "Internal Error",
     });
