@@ -34,10 +34,11 @@ const ChatProfileIdPage = async ({ params }: ChatProfileIdPageProps) => {
   const otherProfile = profileOne.id === profile?.id ? profileTwo : profileOne;
 
   return (
-    <div className="h-full w-full flex">
+    <div className="h-full w-full flex flex-col">
       <div className="h-full w-full">
         <ChatMemberHeader otherProfile={otherProfile} />
       </div>
+      <div></div>
       <div className="hidden md:flex h-full w-60 z-20 flex-col ml-auto">
         <ChatMemberSidebar
           profileId={params.profileId}
