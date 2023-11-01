@@ -56,7 +56,7 @@ export const MessageBox = ({
     bottomRef,
     loadMore: fetchNextPage,
     shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
-    count: data?.pages?.[0].items?.length ?? 0,
+    count: data?.pages?.[0]?.items?.length ?? 0,
   });
 
   if (status === "pending") {
@@ -84,7 +84,7 @@ export const MessageBox = ({
   return (
     <div ref={chatRef} className="flex-1 flex flex-col py-4 overflow-y-auto">
       {!hasNextPage && <div className="flex-1" />}
-      {!hasNextPage && <MessageWelcome type="channel" name={name} />}
+      {!hasNextPage && <MessageWelcome type={type} name={name} />}
       {hasNextPage && (
         <div className="flex justify-center">
           {isFetchingNextPage ? (
@@ -120,6 +120,7 @@ export const MessageBox = ({
           </Fragment>
         ))}
       </div>
+
       <div ref={bottomRef} />
     </div>
   );
