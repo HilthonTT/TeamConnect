@@ -6,6 +6,7 @@ import {
   Channel,
   Community,
   Conversation,
+  DirectMessage,
   Member,
   Post,
   Profile,
@@ -37,4 +38,8 @@ export type PostWithMemberWithProfile = Post & {
   member: Member & {
     profile: Profile;
   };
+};
+
+export type DirectMessageWithProfile = DirectMessage & {
+  profile: Profile;
 };

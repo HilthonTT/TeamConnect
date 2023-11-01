@@ -36,12 +36,10 @@ export default async function handler(
         id: conversationId as string,
         OR: [
           {
-            profileOne: {
-              id: profile.id,
-            },
-            profileTwo: {
-              id: profile.id,
-            },
+            profileOneId: profile.id,
+          },
+          {
+            profileTwoId: profile.id,
           },
         ],
       },
@@ -117,6 +115,7 @@ export default async function handler(
     const updateKey = `chat:${directMessage}:messages:update`;
 
     res?.socket?.server?.io?.emit(updateKey, directMessage);
+    return res.status(200).json(directMessage);
   } catch (error) {
     console.log("[DIRECT_MESSAGE_ID]", error);
     return res.status(500).json({ error: "Internal Error" });

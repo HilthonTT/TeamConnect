@@ -1,6 +1,6 @@
 "use client";
 
-import { Member } from "@prisma/client";
+import { Profile } from "@prisma/client";
 import { ElementRef, Fragment, useRef } from "react";
 import { format } from "date-fns";
 
@@ -9,16 +9,16 @@ import { useChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
 
 import { Loader2, ServerCrash } from "lucide-react";
-import { PostWithMemberWithProfile } from "@/types";
+import { DirectMessageWithProfile } from "@/types";
 
-import { MessageItem } from "@/components/message/message-item";
 import { MessageWelcome } from "@/components/message/message-welcome";
+import { MessageItemDirect } from "@/components/message/message-item-direct";
 
 const DATE_FORMAT = "d MMMM yyyy, HH:mm";
 
 interface MessageBoxProps {
   name: string;
-  member: Member;
+  profile: Profile;
   chatId: string;
   apiUrl: string;
   socketUrl: string;
@@ -28,9 +28,9 @@ interface MessageBoxProps {
   type: "channel" | "conversation";
 }
 
-export const MessageBox = ({
+export const MessageBoxDirect = ({
   name,
-  member,
+  profile,
   chatId,
   apiUrl,
   socketUrl,
@@ -40,8 +40,8 @@ export const MessageBox = ({
   type,
 }: MessageBoxProps) => {
   const queryKey = `chat:${chatId}`;
-  const addKey = `chat:${chatId}:posts`;
-  const updateKey = `chat:${chatId}:posts:update`;
+  const addKey = `chat:${chatId}:messages`;
+  const updateKey = `chat:${chatId}:messages:update`;
 
   const chatRef = useRef<ElementRef<"div">>(null);
   const bottomRef = useRef<ElementRef<"div">>(null);
@@ -102,25 +102,24 @@ export const MessageBox = ({
       <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
-            {group.items.map((post: PostWithMemberWithProfile) => (
-              <MessageItem
-                key={post.id}
-                id={post.id}
-                currentMember={member}
-                member={post.member}
-                content={post.content}
-                fileUrl={post.fileUrl}
-                deleted={post.deleted}
-                timestamp={format(new Date(post.createdAt), DATE_FORMAT)}
+            {group.items.map((message: DirectMessageWithProfile) => (
+              <MessageItemDirect
+                key={message.id}
+                id={message.id}
+                currentProfile={profile}
+                profile={message.profile}
+                content={message.content}
+                fileUrl={message.fileUrl}
+                deleted={message.deleted}
+                timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
                 socketUrl={socketUrl}
                 socketQuery={socketQuery}
-                isUpdated={post.updatedAt !== post.createdAt}
+                isUpdated={message.updatedAt !== message.createdAt}
               />
             ))}
           </Fragment>
         ))}
       </div>
-
       <div ref={bottomRef} />
     </div>
   );

@@ -6,20 +6,13 @@ import axios from "axios";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
-import { Member, MemberRole, Profile } from "@prisma/client";
+import { Profile } from "@prisma/client";
 
 import { useEffect, useState } from "react";
 import { useModal } from "@/hooks/use-modal-store";
 import { useRouter } from "next/navigation";
 
-import {
-  Edit,
-  FileTerminal,
-  ScrollText,
-  ShieldAlert,
-  ShieldCheck,
-  Trash,
-} from "lucide-react";
+import { Edit, FileTerminal, ScrollText, Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -33,36 +26,28 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 interface MessageItemProps {
   id: string;
   content: string;
-  member: Member & {
-    profile: Profile;
-  };
+  profile: Profile;
   timestamp: string;
   fileUrl: string | null;
   deleted: boolean;
-  currentMember: Member;
+  currentProfile: Profile;
   isUpdated: boolean;
   socketUrl: string;
   socketQuery: Record<string, string>;
 }
 
-const roleIconMap = {
-  GUEST: null,
-  MODERATOR: <ShieldCheck className="h-4 w-4 ml-2 text-indigo-500" />,
-  ADMIN: <ShieldAlert className="h-4 w-4 ml-2 text-rose-500" />,
-};
-
 const formSchema = z.object({
   content: z.string().min(1),
 });
 
-export const MessageItem = ({
+export const MessageItemDirect = ({
   id,
   content,
-  member,
+  profile,
   timestamp,
   fileUrl,
   deleted,
-  currentMember,
+  currentProfile,
   isUpdated,
   socketQuery,
   socketUrl,
@@ -72,11 +57,11 @@ export const MessageItem = ({
   const router = useRouter();
 
   const onMemberClick = () => {
-    if (member.id === currentMember.id) {
+    if (profile.id === currentProfile.id) {
       return;
     }
 
-    router.push(`/chat/${member.profile.id}`);
+    router.push(`/chat/${profile.id}`);
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -124,10 +109,7 @@ export const MessageItem = ({
 
   const fileType = fileUrl?.split(".").pop();
 
-  const isAdmin = currentMember.role === MemberRole.ADMIN;
-  const isModerator = isAdmin || currentMember.role === MemberRole.MODERATOR;
-  const isOwner = currentMember.id === member.id;
-  const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
+  const isOwner = currentProfile.id === profile.id;
   const canEditMessage = !deleted && isOwner && !fileUrl;
   const isPdf = fileType === "pdf" && fileUrl;
   const isText = fileType === "txt" && fileUrl;
@@ -139,7 +121,7 @@ export const MessageItem = ({
         <div
           className="cursor-pointer hover:drop-shadow-md transition"
           onClick={onMemberClick}>
-          <UserAvatar src={member.profile.imageUrl} />
+          <UserAvatar src={profile.imageUrl} />
         </div>
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">
@@ -147,11 +129,8 @@ export const MessageItem = ({
               <p
                 className="font-semibold text-sm hover:underline cursor-pointer"
                 onClick={onMemberClick}>
-                {member.profile.username}
+                {profile.username}
               </p>
-              <ActionTooltip label={member.role}>
-                {roleIconMap[member.role]}
-              </ActionTooltip>
             </div>
             <span className="text-xs text-zinc-500 dark:text-zinc-400">
               {timestamp}
@@ -254,7 +233,7 @@ export const MessageItem = ({
           )}
         </div>
       </div>
-      {canDeleteMessage && (
+      {isOwner && (
         <div
           className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5
          bg-white dark:bg-zinc-800 border rounded-sm">
