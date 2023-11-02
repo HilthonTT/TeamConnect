@@ -1,5 +1,6 @@
 import { ChatMemberHeader } from "@/components/chat/chat-member-header";
 import { ChatMemberSidebar } from "@/components/chat/chat-member-sidebar";
+import { MediaRoom } from "@/components/media-room";
 import { MessageBoxDirect } from "@/components/message/message-box-direct";
 import { MessageInput } from "@/components/message/message-input";
 
@@ -68,6 +69,9 @@ const ChatProfileIdPage = async ({
                 query={{ conversationId: conversation.id }}
               />
             </>
+          )}
+          {searchParams?.video && (
+            <MediaRoom chatId={conversation.id} video={true} audio={true} />
           )}
         </div>
         <div className="hidden md:flex h-full w-60 z-20 flex-col ml-auto">

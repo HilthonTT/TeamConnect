@@ -1,5 +1,6 @@
 import { ChannelHeader } from "@/components/channel/channel-header";
 import { ChannelSidebar } from "@/components/channel/channel-sidebar";
+import { MediaRoom } from "@/components/media-room";
 import { MessageBox } from "@/components/message/message-box";
 import { MessageInput } from "@/components/message/message-input";
 
@@ -72,6 +73,13 @@ const ChannelIdPage = async ({ params }: ChannelIdProps) => {
                 }}
               />
             </>
+          )}
+
+          {channel.type === ChannelType.AUDIO && (
+            <MediaRoom chatId={channel.id} video={false} audio={true} />
+          )}
+          {channel.type === ChannelType.VIDEO && (
+            <MediaRoom chatId={channel.id} video={true} audio={false} />
           )}
         </div>
         <div className="hidden md:flex w-60 z-20">
