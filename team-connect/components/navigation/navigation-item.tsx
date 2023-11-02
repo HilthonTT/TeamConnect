@@ -4,14 +4,14 @@ import { useRouter, usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { ActionTooltip } from "@/components/action-tooltip";
-import { Bell, Users, MessageCircle } from "lucide-react";
+import { Users, MessageCircle, Search } from "lucide-react";
 
 interface NavigationItemProps {
   name: string;
 }
 
 const iconMap: Record<string, any> = {
-  ACTIVITY: <Bell className="text-zinc-600 dark:text-zinc-200" />,
+  EXPLORE: <Search className="text-zinc-600 dark:text-zinc-200" />,
   COMMUNITY: <Users className="text-zinc-600 dark:text-zinc-200" />,
   CHAT: <MessageCircle className="text-zinc-600 dark:text-zinc-200" />,
 };
@@ -21,13 +21,12 @@ export const NavigationItem = ({ name }: NavigationItemProps) => {
   const pathName = usePathname();
 
   const icon = iconMap[name.toUpperCase()];
-  const currentPath = pathName.toLowerCase();
+  const currentPath = pathName?.toLowerCase();
   const desiredRoute = `/${name}`.toLowerCase();
 
-  const isCurrentRoute = currentPath.includes(desiredRoute);
+  const isCurrentRoute = currentPath?.includes(desiredRoute);
 
   const onClick = () => {
-    console.log(desiredRoute);
     router.push(desiredRoute);
   };
 
