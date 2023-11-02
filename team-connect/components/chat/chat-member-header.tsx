@@ -3,6 +3,7 @@
 import qs from "query-string";
 import { ActionTooltip } from "@/components/action-tooltip";
 import { UserAvatar } from "@/components/user-avatar";
+import { SocketIndicator } from "@/components/socket-indicator";
 import { Video, VideoOff } from "lucide-react";
 
 import { Profile } from "@prisma/client";
@@ -44,6 +45,7 @@ export const ChatMemberHeader = ({ otherProfile }: ChatMemberHeaderProps) => {
           {otherProfile.username}
         </span>
         <div className="ml-auto flex items-center flex-row space-x-4 mr-2">
+          <SocketIndicator />
           <ActionTooltip side="left" label={tooltipLabel}>
             <button
               onClick={onClick}
