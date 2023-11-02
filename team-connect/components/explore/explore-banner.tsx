@@ -10,9 +10,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import Image from "next/image";
 
 const formSchema = z.object({
-  keywords: z.string().min(1, {
+  keywords: z.string().min(0, {
     message: "Search keywords are required.",
   }),
 });
@@ -34,7 +35,7 @@ export const ExploreBanner = () => {
     const url = qs.stringifyUrl({
       url: pathName || "",
       query: {
-        keywords: values.keywords,
+        keywords: values.keywords === "" ? undefined : values.keywords,
       },
     });
 
@@ -44,10 +45,11 @@ export const ExploreBanner = () => {
 
   return (
     <div className="relative h-64 overflow-hidden">
-      <img
+      <Image
         className="w-full h-full object-cover"
         src="/images/banner.jpg"
         alt="Banner Image"
+        fill
       />
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="absolute inset-0 flex items-center justify-center text-white text-4xl font-bold w-full">
