@@ -14,16 +14,13 @@ Livekit: Enables voice call functionalities within the app.
 Tailwind CSS: Utilized for styling and UI development.
 ShadCN: [Please add a brief description of what ShadCN is or its role in the app if applicable].
 Uploadthings: Image upload functionality for the app.
+
 Installation
 Clone the Repository
 
-bash
-Copy code
 git clone https://github.com/HilthonTT/TeamConnect.git
 Install Dependencies
 
-bash
-Copy code
 cd TeamConnect
 npm install
 Environment Variables
@@ -32,8 +29,6 @@ Set up necessary environment variables. You might need configuration details for
 
 Run the App
 
-bash
-Copy code
 npm run dev
 The app will be served at http://localhost:3000.
 
