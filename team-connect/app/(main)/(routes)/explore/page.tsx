@@ -1,23 +1,20 @@
-import { db } from "@/lib/db";
+import { currentProfile } from "@/lib/current-profile";
+import { redirectToSignIn } from "@clerk/nextjs";
 
 import { ExploreBanner } from "@/components/explore/explore-banner";
 import { ExploreCommunities } from "@/components/explore/explore-communities";
 
 const Activity = async () => {
-  const communities = await db.community.findMany({
-    include: {
-      members: {
-        include: {
-          profile: true,
-        },
-      },
-    },
-  });
+  const profile = await currentProfile();
+
+  if (!profile) {
+    return redirectToSignIn();
+  }
 
   return (
     <div>
       <ExploreBanner />
-      <ExploreCommunities communities={communities} />
+      <ExploreCommunities apiUrl="api/community" />
     </div>
   );
 };
